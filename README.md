@@ -25,8 +25,9 @@ Whisper Box is a cutting-edge messaging application built with Next.js that prov
 - **Modern UI Components** - Built with shadcn/ui for consistent design
 
 ## 📸 Application Preview
+**Dashboard**
+<img width="1353" height="637" alt="image" src="https://github.com/user-attachments/assets/deff03a0-73fa-4270-80c2-aae89ebebd24" />
 
-*(Screenshots would be added here showing the dashboard, messaging interface, and user profiles)*
 
 ## 🛠️ Technology Stack
 
