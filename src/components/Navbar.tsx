@@ -8,10 +8,14 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, Moon, Settings, Sun, User2 } from "lucide-react";
+import { LogOut, Moon, Settings, Sun } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { SidebarTrigger, useSidebar } from "./ui/sidebar";
+import {
+   SidebarTrigger,
+   //  useSidebar
+} from "./ui/sidebar";
+
 import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { User } from "next-auth";
@@ -20,14 +24,14 @@ import Image from "next/image";
 
 const Navbar = () => {
    const { theme, setTheme } = useTheme();
-   const { toggleSidebar } = useSidebar();
+   // const { toggleSidebar } = useSidebar();
    const [mounted, setMounted] = useState(false);
    useEffect(() => {
       setMounted(true);
    }, []);
    const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
-   const { data: session, update } = useSession();
+   const { data: session } = useSession();
 
    const user: User = session?.user as User;
 
@@ -74,13 +78,12 @@ const Navbar = () => {
                   <DropdownMenu>
                      <DropdownMenuTrigger className="flex gap-1">
                         <Avatar className="border">
-                           <AvatarImage
-                              
-                              src={user.image || "/avatar.png"} 
-                           />
+                           <AvatarImage src={user.image || "/avatar.png"} />
                            <AvatarFallback>AI</AvatarFallback>
                         </Avatar>
-                        <p className="p-1 px-2 text-md font-semibold">{user?.username || "----"}</p>
+                        <p className="p-1 px-2 text-md font-semibold">
+                           {user?.username || "----"}
+                        </p>
                      </DropdownMenuTrigger>
                      <DropdownMenuContent sideOffset={10}>
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -102,7 +105,10 @@ const Navbar = () => {
                </>
             ) : (
                <div className="flex gap-3">
-                  <Button size="lg" variant="outline" className="hidden sm:flex">
+                  <Button
+                     size="lg"
+                     variant="outline"
+                     className="hidden sm:flex">
                      <Link href="/signup">Signup</Link>
                   </Button>
                   <Button size="lg">

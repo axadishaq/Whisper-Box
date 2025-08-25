@@ -1,6 +1,5 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import { User } from "next-auth";
 import dbConnect from "@/lib/dbConnection";
 import UserModel from "@/models/user.model";
 import mongoose from "mongoose";
@@ -9,7 +8,7 @@ export async function GET(request: Request) {
    try {
       await dbConnect();
       const session = await getServerSession(authOptions);
-      const user: User = session?.user as User;
+      // const user: User = session?.user as User;
 
       // Debug: Check if database has any users
       // const totalUsers = await UserModel.countDocuments();

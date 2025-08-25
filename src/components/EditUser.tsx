@@ -1,13 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import {
-   SheetContent,
-   SheetDescription,
-   SheetHeader,
-   SheetTitle,
-   SheetClose,
-} from "./ui/sheet";
+import { SheetContent, SheetHeader, SheetTitle, SheetClose } from "./ui/sheet";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -57,7 +51,7 @@ const EditUser = ({
          username: user.username,
          email: user.email!,
          password: "",
-         image: user.image, 
+         image: user.image,
       },
    });
 
@@ -192,7 +186,7 @@ const EditUser = ({
                      className="space-y-4">
                      <FormField
                         control={form.control}
-                        name="image" 
+                        name="image"
                         render={({ field }) => (
                            <FormItem>
                               <FormLabel>Image</FormLabel>

@@ -26,10 +26,20 @@ const Page = () => {
          });
          toast.success("Message send Successfully.");
          setMessage("");
-      } catch (e: any) {
+      } catch (e: unknown) {
          console.log(e); // Check if it's a user not found error
-         if (e.response?.data?.message) {
-            toast.error(e.response.data.message);
+         if (
+            e &&
+            typeof e === "object" &&
+            "response" in e &&
+            e.response &&
+            typeof e.response === "object" &&
+            "data" in e.response &&
+            e.response.data &&
+            typeof e.response.data === "object" &&
+            "message" in e.response.data
+         ) {
+            toast.error((e.response.data as { message: string }).message);
          } else {
             toast.error("Please try again later.");
          }
