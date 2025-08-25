@@ -68,6 +68,12 @@ export async function sendVerificationEmail(
       };
    } catch (emailError) {
       // console.error("Error sending verification email:", emailError);
-      return { success: false, message: "Failed to send verification email." };
+      return {
+         success: false,
+         message:
+            emailError instanceof Error
+               ? emailError.message
+               : "Failed to send verification email.",
+      };
    }
 }
