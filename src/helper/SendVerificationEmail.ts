@@ -55,7 +55,7 @@ export async function sendVerificationEmail(
       });
 
       if (error) {
-         console.error("Error sending email:", error, data);
+         // console.error("Error sending email:", error, data);
          return {
             success: false,
             message: "Failed to send verification email.",
@@ -67,7 +67,7 @@ export async function sendVerificationEmail(
          message: "Verification email sent successfully.",
       };
    } catch (emailError) {
-      console.error("Error sending verification email:", emailError);
+      // console.error("Error sending verification email:", emailError);
       return { success: false, message: "Failed to send verification email." };
    }
 }
