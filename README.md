@@ -43,42 +43,6 @@
 
 </div>
 
-## 🚀 Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/axadishaq/Whisper-Box.git
-
-# Navigate to project
-cd Whisper-Box
-
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp .env.example .env.local
-
-# Run development server
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to see the application.
-
-## 📸 Visual Showcase
-
-<div align="center">
-
-### 🏠 Dashboard Preview
-![Dashboard](https://via.placeholder.com/800x400/98CCD3/ffffff?text=Beautiful+Dashboard+with+Charts+and+Metrics)
-
-### 💬 Messaging Interface
-![Messaging](https://via.placeholder.com/800x400/98CCD3/ffffff?text=Modern+Chat+Interface+with+Real-time+Updates)
-
-### 👤 User Profile
-![Profile](https://via.placeholder.com/800x400/98CCD3/ffffff?text=Customizable+User+Profiles+with+Analytics)
-
-</div>
-
 ## 🛠️ Tech Stack Deep Dive
 
 <div align="center">
@@ -135,35 +99,6 @@ graph TD
 [![Discord](https://img.shields.io/badge/Discord-Join_Community-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discordapp.com/users/1095416331333017692)
 [![Twitter](https://img.shields.io/badge/Twitter-Follow-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/axadishaq)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/axadishaq)
-
-</div>
-
-## 📈 GitHub Statistics
-
-<div align="center">
-
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=axadishaq&show_icons=true&theme=radical&hide_border=true)
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=axadishaq&layout=compact&theme=radical&hide_border=true)
-
-![Streak Stats](https://github-readme-streak-stats.herokuapp.com/?user=axadishaq&theme=radical&hide_border=true)
-
-</div>
-
-## 🏆 Achievements
-
-<div align="center">
-
-[![Product Hunt](https://img.shields.io/badge/Product_Hunt-#1_Product_of_the_Day-FF6154?style=for-the-badge&logo=product-hunt&logoColor=white)]()
-[![HackerNews](https://img.shields.io/badge/HackerNews-Top_10-FF6600?style=for-the-badge&logo=y-combinator&logoColor=white)]()
-[![Dev.to](https://img.shields.io/badge/Dev.to-Featured-0A0A0A?style=for-the-badge&logo=dev.to&logoColor=white)]()
-
-</div>
-
-## 🌟 Star History
-
-<div align="center">
-
-[![Star History Chart](https://api.star-history.com/svg?repos=axadishaq/Whisper-Box&type=Date)](https://star-history.com/#axadishaq/Whisper-Box&Date)
 
 </div>
 
