@@ -87,7 +87,7 @@ graph TD
     C --> H[User Profiles]
     C --> I[Settings]
     
-    style A fill:#98CCD3
+    style A fill:#4A90E2 
     style B fill:#FF6B6B
     style C fill:#47A248
 ```
