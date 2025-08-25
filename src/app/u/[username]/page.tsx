@@ -20,7 +20,7 @@ const Page = () => {
       if (!message.trim()) return;
       setLoading(true);
       try {
-         const res = await axios.post("/api/send-message", {
+         await axios.post("/api/send-message", {
             username,
             content: message.trim(),
          });
