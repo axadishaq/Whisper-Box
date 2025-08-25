@@ -1,4 +1,4 @@
-# ![Whisper Box](./public/whisperBox.png) Whisper Box - Mysterious Messaging
+# <img src="./public/whisperBox.png" alt="Whisper Box" width="40" height="40" /> Whisper Box - Mysterious Messaging
 
 ![Whisper Box Banner](https://img.shields.io/badge/Whisper_Box-Messaging_Platform-98CCD3?style=for-the-badge&logo=comments&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-15.4.2-000000?style=for-the-badge&logo=next.js&logoColor=white)
