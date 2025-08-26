@@ -59,6 +59,11 @@ export default function ChatWidget() {
                <div
                   ref={chatContainerRef}
                   className="flex-1 overflow-y-auto rounded space-y-2 flex flex-col">
+                  {messages.length === 0 && (
+                     <div className="p-2 rounded-lg text-sm max-w-[100%] bg-muted self-start">
+                        How can I help you?
+                     </div>
+                  )}
                   {messages.map((message) => (
                      <div
                         key={message.id}
