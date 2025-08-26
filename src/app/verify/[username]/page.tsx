@@ -20,6 +20,8 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const VerifyAccount = () => {
    const router = useRouter();
@@ -103,7 +105,11 @@ const VerifyAccount = () => {
    return (
       <>
          <div className="flex justify-center items-center min-h-[80vh] dark:bg-background">
-            <div className="w-full min-h-96 max-w-lg lg:max-w-xl p-8 space-y-12 rounded-lg shadow-2xl dark:bg-accent">
+            <motion.div
+               className="w-full min-h-96 max-w-lg lg:max-w-xl p-8 space-y-12 rounded-lg shadow-2xl dark:bg-accent"
+               initial="hidden"
+               animate="visible"
+               variants={staggerContainer}>
                <div className="text-center">
                   <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 dark:text-foreground">
                      Verify Your Account
@@ -112,10 +118,11 @@ const VerifyAccount = () => {
                      Whisper Box – A box for secret whispers.
                   </p>
                   {codeFromUrl && (
-                     <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mb-4">
-                        <p className="text-blue-800 text-sm">
-                           We detected a verification code in the link. If automatic verification failed, 
-                           please check the code below and click Submit.
+                     <div className=" rounded-md p-3 mb-4">
+                        <p className="text-yellow-500 text-sm">
+                           We detected a verification code in the link. If
+                           automatic verification failed, please check the code
+                           below and click Submit.
                         </p>
                      </div>
                   )}
@@ -123,37 +130,47 @@ const VerifyAccount = () => {
                <Form {...form}>
                   <form
                      onSubmit={form.handleSubmit(onSubmit)}
-                     className="space-y-10">
-                     <FormField
-                        control={form.control}
-                        name="code"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Verification Code</FormLabel>
-                              <FormControl>
-                                 <Input placeholder="Enter verification code" {...field} />
-                              </FormControl>
-                              <FormDescription>
-                                 Please enter the one-time password sent to your
-                                 email.
-                              </FormDescription>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
-                     <Button type="submit" className="w-full" disabled={isLoading}>
-                        {isLoading ? (
-                           <>
-                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
-                              processing...
-                           </>
-                        ) : (
-                           "Submit"
-                        )}
-                     </Button>
+                     className="space-y-8">
+                     <motion.div variants={fadeInUp}>
+                        <FormField
+                           control={form.control}
+                           name="code"
+                           render={({ field }) => (
+                              <FormItem>
+                                 <FormLabel>Verification Code</FormLabel>
+                                 <FormControl>
+                                    <Input
+                                       placeholder="Enter verification code"
+                                       {...field}
+                                    />
+                                 </FormControl>
+                                 <FormDescription>
+                                    Please enter the one-time password sent to
+                                    your email.
+                                 </FormDescription>
+                                 <FormMessage />
+                              </FormItem>
+                           )}
+                        />
+                     </motion.div>
+                     <motion.div variants={fadeInUp}>
+                        <Button
+                           type="submit"
+                           className="w-full"
+                           disabled={isLoading}>
+                           {isLoading ? (
+                              <>
+                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                                 processing...
+                              </>
+                           ) : (
+                              "Submit"
+                           )}
+                        </Button>
+                     </motion.div>
                   </form>
                </Form>
-            </div>
+            </motion.div>
          </div>
       </>
    );

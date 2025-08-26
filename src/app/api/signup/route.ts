@@ -12,24 +12,74 @@ export async function POST(request: NextRequest) {
       //validation
       // console.log("Signup attempt:", { username, email });
 
+      // Normalize username to lowercase for case-insensitive comparison
+      const normalizedUsername = username.toLowerCase();
+
+      // Check if username is already taken by a verified user
       const existingUserVerifiedByUsername = await UserModel.findOne({
-         username,
+         username: normalizedUsername,
          isVerified: true,
       });
       if (existingUserVerifiedByUsername) {
-         // console.log("Username already taken:", username);
+         // console.log("Username already taken by verified user:", username);
          return NextResponse.json(
             { success: false, message: "Username already taken!" },
             { status: 400 }
          );
       }
+
+      // Check if username is already taken by an unverified user
+      const existingUnverifiedUserByUsername = await UserModel.findOne({
+         username: normalizedUsername,
+         isVerified: false,
+      });
+      
+      // OTP generation
+      const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+      // console.log("Generated verification code for:", email);
+
+      if (existingUnverifiedUserByUsername) {
+         // console.log("Updating existing unverified user:", email);
+         const hashedPassword = await bcryptjs.hash(password, 10);
+         existingUnverifiedUserByUsername.password = hashedPassword;
+         existingUnverifiedUserByUsername.verifyCode = verifyCode;
+         existingUnverifiedUserByUsername.verifyCodeExpiry = new Date(
+            Date.now() + 3600000
+         );
+         await existingUnverifiedUserByUsername.save();
+         console.log("User updated successfully:", email);
+         // Send verification email
+         const emailResponse = await sendVerificationEmail(
+            email,
+            username,
+            verifyCode
+         );
+         if (!emailResponse.success) {
+            console.error(
+               "Failed to send verification email:",
+               emailResponse.message
+            );
+            return NextResponse.json(
+               {
+                  success: false,
+                  message: emailResponse.message,
+               },
+               { status: 500 }
+            );
+         }
+         return NextResponse.json(
+            {
+               success: true,
+               message: "User updated successfully. Please verify your mail",
+            },
+            { status: 200 }
+         );
+      }
+
       //checking user by email
       const existingUserByEmail = await UserModel.findOne({
          email,
       });
-      //OTP generation
-      const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
-      // console.log("Generated verification code for:", email);
 
       if (existingUserByEmail) {
          if (existingUserByEmail.isVerified) {
@@ -79,7 +129,7 @@ export async function POST(request: NextRequest) {
 
          //saving user
          const newUser = new UserModel({
-            username,
+            username: normalizedUsername,
             email,
             password: hashedPassword,
             verifyCode,
@@ -98,7 +148,10 @@ export async function POST(request: NextRequest) {
          verifyCode
       );
       if (!emailResponse.success) {
-         console.error("Failed to send verification email:", emailResponse.message);
+         console.error(
+            "Failed to send verification email:",
+            emailResponse.message
+         );
          return Response.json(
             {
                success: false,

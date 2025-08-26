@@ -6,7 +6,9 @@ export async function POST(request: Request) {
    await dbConnect();
    const { username, content } = await request.json();
    try {
-      const user = await UserModel.findOne({ username });
+      // Normalize username to lowercase for case-insensitive comparison
+      const normalizedUsername = username.toLowerCase();
+      const user = await UserModel.findOne({ username: normalizedUsername });
       if (!user) {
          return Response.json(
             {

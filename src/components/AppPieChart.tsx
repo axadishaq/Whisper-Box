@@ -5,7 +5,8 @@ import {
    ChartTooltipContent,
    type ChartConfig,
 } from "@/components/ui/chart";
-import { Pie, PieChart, Cell, Label } from "recharts";
+import { Pie, PieChart, Cell } from "recharts";
+import AnimatedCounter from "@/components/AnimatedCounter";
 
 const chartConfig = {
    messages: {
@@ -23,9 +24,18 @@ interface MessageCount {
 interface AppPieChartProps {
    data: MessageCount[];
    totalMessages: number;
+   isLoading?: boolean;
 }
 
-const AppPieChart = ({ data, totalMessages }: AppPieChartProps) => {
+const AppPieChart = ({ data, totalMessages, isLoading = false }: AppPieChartProps) => {
+   if (isLoading) {
+      return (
+         <div className="relative min-h-[250px] max-h-[400px] w-full mt-6 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+         </div>
+      );
+   }
+   
    if (!data || data.length === 0) {
       return (
          <div>
@@ -39,55 +49,40 @@ const AppPieChart = ({ data, totalMessages }: AppPieChartProps) => {
    }
 
    return (
-      <ChartContainer
-         config={chartConfig}
-         className="min-h-[250px] max-h-[400px] w-full mt-10">
-         <PieChart>
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <Pie
-               data={data}
-               dataKey="value"
-               nameKey="name"
-               innerRadius={60}
-               outerRadius={90}
-               fill="var(--color-messages)"
-               label={({ name, percent }) =>
-                  `${name} ${(percent * 100).toFixed(0)}%`
-               }
-               animationDuration={2500}
-               animationEasing="ease-in-out">
-               {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.fill} />
-               ))}
-               <Label
-                  content={({ viewBox }) => {
-                     if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                        return (
-                           <text
-                              x={viewBox.cx}
-                              y={viewBox.cy}
-                              textAnchor="middle"
-                              dominantBaseline="middle">
-                              <tspan
-                                 x={viewBox.cx}
-                                 y={viewBox.cy}
-                                 className="fill-foreground text-3xl font-bold">
-                                 {totalMessages.toLocaleString()}
-                              </tspan>
-                              <tspan
-                                 x={viewBox.cx}
-                                 y={(viewBox.cy || 0) + 24}
-                                 className="fill-muted-foreground">
-                                 Total Messages
-                              </tspan>
-                           </text>
-                        );
-                     }
-                  }}
-               />
-            </Pie>
-         </PieChart>
-      </ChartContainer>
+      <div className="relative h-[300px] w-full mt-6">
+         <ChartContainer config={chartConfig} className="w-full h-full flex items-center justify-center">
+            <PieChart width={250} height={250}>
+               <ChartTooltip content={<ChartTooltipContent />} />
+               <Pie
+                  data={data}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={90}
+                  fill="var(--color-messages)"
+                  label={({ name, percent }) =>
+                     `${name} ${(percent * 100).toFixed(0)}%`
+                  }
+                  labelLine={false}
+                  animationDuration={4000}
+                  animationEasing="ease-in-out">
+                  {data.map((entry, index) => (
+                     <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+               </Pie>
+            </PieChart>
+         </ChartContainer>
+
+         {/* Custom overlay for animated counter */}
+         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+            <div className="text-3xl font-bold text-foreground">
+               <AnimatedCounter value={totalMessages} duration={4} />
+            </div>
+            <div className="text-muted-foreground mt-1 text-sm">Total Messages</div>
+         </div>
+      </div>
    );
 };
 

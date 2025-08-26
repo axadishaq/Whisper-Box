@@ -45,9 +45,12 @@ export async function POST(request: NextRequest) {
          }
       }
 
+      // Normalize username to lowercase for case-insensitive comparison
+      const normalizedUsername = username ? username.toLowerCase() : undefined;
+
       // Check if username is being changed and if it's already taken
-      if (username && username !== currentUser.username) {
-         const existingUser = await UserModel.findOne({ username });
+      if (normalizedUsername && normalizedUsername !== currentUser.username) {
+         const existingUser = await UserModel.findOne({ username: normalizedUsername });
          if (existingUser) {
             return NextResponse.json(
                { success: false, message: "Username already taken" },
@@ -64,7 +67,7 @@ export async function POST(request: NextRequest) {
          password?: string;
       } = {};
 
-      if (username) updateData.username = username;
+      if (normalizedUsername) updateData.username = normalizedUsername;
       if (email) updateData.email = email;
       if (image) updateData.image = image; // Changed from avatar to image
 

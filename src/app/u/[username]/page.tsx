@@ -1,11 +1,14 @@
 "use client";
+
 import React, { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { toast } from "sonner";
-import { SendIcon } from "lucide-react";
+import { Loader2, SendIcon } from "lucide-react";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const Page = () => {
    const params = useParams<{ username: string }>();
@@ -24,7 +27,7 @@ const Page = () => {
             username,
             content: message.trim(),
          });
-         toast.success("Message send Successfully.");
+         toast.success("Message sent successfully.");
          setMessage("");
       } catch (e: unknown) {
          console.log(e); // Check if it's a user not found error
@@ -84,15 +87,21 @@ const Page = () => {
    };
 
    return (
-      <div className="max-w-xl mx-auto py-10 space-y-6">
-         <div className="space-y-2 text-center">
+      <motion.div
+         className="max-w-xl mx-auto py-10 space-y-6"
+         initial="hidden"
+         animate="visible"
+         variants={staggerContainer}>
+         <motion.div className="space-y-2 text-center" variants={fadeInUp}>
             <h1 className="text-2xl font-semibold">
                Send an anonymous message
             </h1>
             <p className="text-sm text-muted-foreground">to @{username}</p>
-         </div>
+         </motion.div>
 
-         <div className="flex flex-col md:flex-row gap-3">
+         <motion.div
+            variants={fadeInUp}
+            className="flex flex-col md:flex-row gap-3">
             <Input
                value={message}
                className="p-4 py-5"
@@ -106,30 +115,40 @@ const Page = () => {
                {loading ? "Sending..." : "Send"}
                <SendIcon />
             </Button>
-         </div>
+         </motion.div>
 
-         <div className="space-y-3">
+         <motion.div variants={fadeInUp} className="space-y-3">
             <Button
                variant="secondary"
                onClick={getSuggestions}
                disabled={suggestLoading}>
-               {suggestLoading ? "Loading suggestions..." : "Suggest Messages"}
+               {suggestLoading ? (
+                  <>
+                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                     Loading...
+                  </>
+               ) : (
+                  "Suggest Messages"
+               )}
             </Button>
 
             {suggestions.length > 0 && (
-               <div className="grid grid-cols-1 gap-2">
+               <motion.div
+                  variants={staggerContainer}
+                  className="grid grid-cols-1 gap-2">
                   {suggestions.map((suggestion: string, index: number) => (
-                     <button
+                     <motion.button
+                        variants={fadeInUp}
                         key={index}
                         className="border rounded-md p-3 text-sm text-center hover:bg-muted transition-colors cursor-pointer"
                         onClick={() => handleSuggestionClick(suggestion)}>
                         {suggestion}
-                     </button>
+                     </motion.button>
                   ))}
-               </div>
+               </motion.div>
             )}
-         </div>
-      </div>
+         </motion.div>
+      </motion.div>
    );
 };
 

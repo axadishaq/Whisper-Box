@@ -33,9 +33,11 @@ export async function GET(request: Request) {
       }
 
       const { username } = result.data;
+      // Normalize username to lowercase for case-insensitive comparison
+      const normalizedUsername = username.toLowerCase();
       //check db
       const existingVerifiedUser = await UserModel.findOne({
-         username,
+         username: normalizedUsername,
          isVerified: true,
       });
       if (existingVerifiedUser) {

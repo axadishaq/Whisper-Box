@@ -90,8 +90,10 @@ export const authOptions: NextAuthOptions = {
                let username = baseUsername;
                let counter = 1;
 
-               // Keep trying until we find a unique username
-               while (await UserModel.findOne({ username })) {
+               // Keep trying until we find a unique username (case-insensitive)
+               while (await UserModel.findOne({ 
+                  username: { $regex: new RegExp(`^${username}$`, "i") } 
+               })) {
                   username = `${baseUsername}${counter}`;
                   counter++;
                }

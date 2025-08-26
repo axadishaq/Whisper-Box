@@ -22,12 +22,27 @@ interface MessageStats {
 interface AppAreaChartProps {
    data: MessageStats[];
    title?: string;
+   isLoading?: boolean;
 }
 
 const AppAreaChart = ({
    data,
    title = "Messages Trend",
+   isLoading = false,
 }: AppAreaChartProps) => {
+   if (isLoading) {
+      return (
+         <div className="p-6 rounded-xl border border-border/30">
+            <h1 className="text-xl font-semibold mb-4 text-foreground">
+               {title}
+            </h1>
+            <div className="min-h-[250px] max-h-[400px] w-full flex items-center justify-center">
+               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+            </div>
+         </div>
+      );
+   }
+   
    if (!data || data.length === 0) {
       return (
          <div className=" p-6 rounded-xl border border-border/30">
@@ -67,7 +82,7 @@ const AppAreaChart = ({
    ];
 
    return (
-      <div >
+      <div>
          <h1 className="text-xl font-medium mb-6 ">{title}</h1>
          <ChartContainer
             config={chartConfig}
@@ -156,7 +171,7 @@ const AppAreaChart = ({
                      stroke: "hsl(var(--background))",
                      strokeWidth: 2,
                   }}
-                  animationDuration={2500}
+                  animationDuration={4000}
                   animationEasing="ease-in-out"
                />
             </AreaChart>

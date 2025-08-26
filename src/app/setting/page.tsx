@@ -4,7 +4,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import EditUser from "@/components/EditUser";
-import Loading from "@/app/Loading";
+import Loading from "@/app/loading";
 import { useSession } from "next-auth/react";
 import { User } from "next-auth";
 import {
@@ -15,6 +15,8 @@ import {
    MessageSquareWarning,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { fadeInUp, slideInLeft, staggerContainer } from "@/lib/animations";
 
 const Setting = () => {
    const [loading, setLoading] = useState(true);
@@ -94,9 +96,14 @@ const Setting = () => {
    }
 
    return (
-      <div className=" min-h-[80vh] py-6 px-4 flex flex-col gap-6">
+      <motion.div 
+         className="min-h-[80vh] py-6 px-4 flex flex-col gap-6"
+         initial="hidden"
+         animate="visible"
+         variants={staggerContainer}
+      >
          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-primary-foreground p-3 rounded-xl ">
+            <motion.div variants={slideInLeft} className="bg-primary-foreground p-3 rounded-xl ">
                <Avatar className="w-full h-full ">
                   <AvatarImage
                      className="object-cover"
@@ -105,14 +112,14 @@ const Setting = () => {
                   />
                   <AvatarFallback>{(user.username || "U")[0]}</AvatarFallback>
                </Avatar>
-            </div>
+            </motion.div>
             <div className="lg:col-span-2">
                {/* User details */}
                <div className="grid grid-cols-2 gap-3">
-                  {stats.map((stat) => (
-                     <Card
-                        key={stat.title}
-                        className=" shadow-md border-0 backdrop-blur-sm transition-all duration-300">
+                  {stats.map((stat, index) => (
+                     <motion.div key={stat.title} variants={fadeInUp} custom={index}>
+                        <Card
+                           className=" shadow-md border-0 backdrop-blur-sm transition-all duration-300">
                         <CardHeader className="flex flex-row gap-3 items-center">
                            <div className={`p-3 rounded-full ${stat.bgColor}`}>
                               <stat.icon className={`h-5 w-5 ${stat.color}`} />
@@ -127,6 +134,7 @@ const Setting = () => {
                            </div>
                         </CardContent>
                      </Card>
+                     </motion.div>
                   ))}
                </div>
                <div className="p-2 xl:flex gap-4 border rounded-xl mt-2 hidden ">
@@ -140,7 +148,7 @@ const Setting = () => {
             </div>
          </div>
 
-         <div className="w-full rounded-xl mt-2">
+         <motion.div variants={fadeInUp} className="w-full rounded-xl mt-2">
             {/* Edit button at the bottom */}
             <Sheet>
                <SheetTrigger asChild>
@@ -158,8 +166,8 @@ const Setting = () => {
                   }}
                />
             </Sheet>
-         </div>
-      </div>
+         </motion.div>
+      </motion.div>
    );
 };
 

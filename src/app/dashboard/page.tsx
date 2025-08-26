@@ -1,5 +1,5 @@
 "use client";
-import Loading from "@/app/Loading";
+import Loading from "@/app/loading";
 import AppAreaChart from "@/components/AppAreaChart";
 import AppPieChart from "@/components/AppPieChart";
 import { DashboardStats } from "@/components/DashboardStats";
@@ -9,6 +9,8 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 interface MessageStats {
    month: string;
@@ -39,6 +41,7 @@ const Dashboard = () => {
    });
    const { data: session, status } = useSession();
    const username = session?.user.username;
+
    useEffect(() => {
       if (typeof window !== "undefined" && session?.user?.username) {
          const baseUrl = `${window.location.protocol}//${window.location.host}`;
@@ -119,11 +122,17 @@ const Dashboard = () => {
    }
 
    return (
-      <div className=" mx-1 md:mx-8 lg:mx-auto p-2 lg:p-6 rounded w-full max-w-6xl">
-         <h1 className="text-4xl font-bold mb-4 text-center">
+      <motion.div
+         className="mx-1 md:mx-8 lg:mx-auto p-2 lg:p-6 rounded w-full max-w-6xl"
+         initial="hidden"
+         animate="visible"
+         variants={staggerContainer}>
+         <motion.h1
+            className="text-4xl font-bold mb-4 text-center"
+            variants={fadeInUp}>
             Welcome, {username}
-         </h1>
-         <div className="mb-4">
+         </motion.h1>
+         <motion.div className="mb-4" variants={fadeInUp}>
             <h2 className="text-md font-semibold mb-2">
                Share Your Unique Link
             </h2>
@@ -136,36 +145,39 @@ const Dashboard = () => {
                />
                <Button onClick={copyToClipboard}>Copy</Button>
             </div>
-         </div>
-         {isLoading ? (
-            <Loading />
-         ) : (
-            <>
-               <DashboardStats
-                  totalMessages={dashboardData.totalMessages}
-                  recentMessages={dashboardData.recentMessages}
-                  growthRate={dashboardData.growthRate}
-               />
-               <div className="grid grid-cols-1 lg:grid-cols-3  2xl:grid-cols-3 gap-4 mt-6">
-                  <div className="bg-primary-foreground p-4 rounded-lg shadow-md">
-                     <h1 className="font-semibold text-xl">
-                        Message Distribution
-                     </h1>
+         </motion.div>
+         <motion.div variants={fadeInUp}>
+            <DashboardStats
+               totalMessages={dashboardData.totalMessages}
+               recentMessages={dashboardData.recentMessages}
+               growthRate={dashboardData.growthRate}
+               isLoading={isLoading}
+            />
+         </motion.div>
+         <motion.div
+            className="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-3  gap-4 mt-6"
+            variants={fadeInUp}>
+            <motion.div
+               className="bg-primary-foreground p-4 rounded-lg shadow-md flex flex-col items-center justify-around"
+               variants={fadeInUp}>
+               <h1 className="font-semibold text-2xl ">Message Distribution</h1>
                      <AppPieChart
                         data={pieChartData}
                         totalMessages={dashboardData.totalMessages}
+                        isLoading={isLoading}
                      />
-                  </div>
-                  <div className="bg-primary-foreground p-4 rounded-lg shadow-md lg:col-span-2 2xl:col-span-2">
-                     <AppAreaChart
-                        data={areaChartData}
-                        title="Monthly Message Trend"
-                     />
-                  </div>
-               </div>
-            </>
-         )}
-      </div>
+            </motion.div>
+            <motion.div
+               className="bg-primary-foreground p-4 rounded-lg shadow-md lg:col-span-2 2xl:col-span-2"
+               variants={fadeInUp}>
+               <AppAreaChart
+                  data={areaChartData}
+                  title="Monthly Message Trend"
+                  isLoading={isLoading}
+               />
+            </motion.div>
+         </motion.div>
+      </motion.div>
    );
 };
 

@@ -12,6 +12,8 @@ import {
    CardTitle,
 } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 export default function UserProfileLanding() {
    const [username, setUsername] = useState("");
@@ -33,9 +35,17 @@ export default function UserProfileLanding() {
    return (
       <div className="min-h-[80vh]">
          {/* Main Content */}
-         <div className="container mx-auto px-4 py-12">
+         <motion.div 
+            className="container mx-auto px-4 py-12"
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+         >
             {/* Header */}
-            <div className="text-center mb-16">
+            <motion.div 
+               className="text-center mb-16"
+               variants={fadeInUp}
+            >
                <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-800  bg-clip-text text-transparent mb-4">
                   Whisper Box
                </h1>
@@ -43,10 +53,13 @@ export default function UserProfileLanding() {
                   Discover anonymous messages and connect with others through
                   honest, heartfelt conversations
                </p>
-            </div>
+            </motion.div>
 
             {/* Username Input Form */}
-            <div className="flex justify-center">
+            <motion.div 
+               className="flex justify-center"
+               variants={fadeInUp}
+            >
                <Card className="w-full max-w-md">
                   <CardHeader>
                      <CardTitle className="text-center">
@@ -58,32 +71,37 @@ export default function UserProfileLanding() {
                   </CardHeader>
                   <CardContent>
                      <form onSubmit={handleSubmit} className="space-y-4">
-                        <div className="space-y-2">
+                        <motion.div 
+                           className="space-y-2"
+                           variants={fadeInUp}
+                        >
                            <Input
                               placeholder="Enter username"
                               value={username}
                               onChange={(e) => setUsername(e.target.value)}
                               className="text-center"
                            />
-                        </div>
-                        <Button
-                           type="submit"
-                           className="w-full"
-                           disabled={isLoading || !username.trim()}>
-                           {isLoading ? (
-                              <div className="flex items-center">
-                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
-                                 Redirecting...
-                              </div>
-                           ) : (
-                              "Send Message"
-                           )}
-                        </Button>
+                        </motion.div>
+                        <motion.div variants={fadeInUp}>
+                           <Button
+                              type="submit"
+                              className="w-full"
+                              disabled={isLoading || !username.trim()}>
+                              {isLoading ? (
+                                 <div className="flex items-center">
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                                    Redirecting...
+                                 </div>
+                              ) : (
+                                 "Send Message"
+                              )}
+                           </Button>
+                        </motion.div>
                      </form>
                   </CardContent>
                </Card>
-            </div>
-         </div>
+            </motion.div>
+         </motion.div>
       </div>
    );
 }

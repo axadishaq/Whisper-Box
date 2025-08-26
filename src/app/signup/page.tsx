@@ -24,6 +24,8 @@ import Link from "next/link";
 import { signupSchema } from "@/schemas/signupSchema";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const Signup = () => {
    // Zod Implementation  Define your form.
@@ -106,122 +108,136 @@ const Signup = () => {
    return (
       <>
          <div className="flex justify-center items-center min-h-screen">
-            <div className="w-full max-w-lg p-8 space-y-8 rounded-lg shadow-2xl dark:bg-accent">
+            <motion.div 
+               className="w-full max-w-lg p-8 space-y-8 rounded-lg shadow-2xl dark:bg-accent"
+               initial="hidden"
+               animate="visible"
+               variants={staggerContainer}
+            >
                <div className="text-center">
                   <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 dark:text-foreground">
                      Join Whisper Box
                   </h1>
-                  <p className="mb-4">
+                  <motion.p 
+                     className="mb-4"
+                     variants={fadeInUp}
+                  >
                      Sign up to start your anonymous adventure
-                  </p>
+                  </motion.p>
                </div>
                <div>
                   <Form {...form}>
                      <form
                         onSubmit={form.handleSubmit(onSubmit)}
                         className="space-y-4">
-                        <FormField
-                           name="username"
-                           control={form.control}
-                           render={({ field }) => (
-                              <FormItem>
-                                 <FormLabel>Username</FormLabel>
-                                 <FormControl>
-                                    <Input
-                                       {...field}
-                                       type="text"
-                                       placeholder="username"
-                                       onChange={(e) => {
-                                          field.onChange(e);
-                                          debounced(e.target.value);
-                                       }}
-                                    />
-                                 </FormControl>
-                                 {isCheckingusername && (
-                                    <Loader2 className="animate-spin" />
-                                 )}
-                                 <p
-                                    className={`text-sm ${
-                                       usernameMessage === "Username is unique."
-                                          ? "text-green-500"
-                                          : "text-red-500"
-                                    }`}>
-                                    {usernameMessage}
-                                 </p>
-                                 <FormMessage />
-                              </FormItem>
-                           )}
-                        />
-                        <FormField
-                           control={form.control}
-                           name="email"
-                           render={({ field }) => (
-                              <FormItem>
-                                 <FormLabel>Email</FormLabel>
-                                 <FormControl>
-                                    <Input
-                                       {...field}
-                                       type="email"
-                                       placeholder="example@mail.com"
-                                    />
-                                 </FormControl>
-                                 <FormMessage />
-                              </FormItem>
-                           )}
-                        />
-                        <FormField
-                           control={form.control}
-                           name="password"
-                           render={({ field }) => (
-                              <FormItem>
-                                 <FormLabel>Password</FormLabel>
-                                 <FormControl>
-                                    <div className="relative">
+                        <motion.div variants={fadeInUp}>
+                           <FormField
+                              name="username"
+                              control={form.control}
+                              render={({ field }) => (
+                                 <FormItem>
+                                    <FormLabel>Username</FormLabel>
+                                    <FormControl>
                                        <Input
                                           {...field}
-                                          placeholder="password"
-                                          type={
-                                             showPassword ? "text" : "password"
-                                          }
+                                          type="text"
+                                          placeholder="username"
+                                          onChange={(e) => {
+                                             field.onChange(e);
+                                             debounced(e.target.value);
+                                          }}
                                        />
-                                       <Button
-                                          type="button"
-                                          variant="ghost"
-                                          size="sm"
-                                          className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                                          onClick={() =>
-                                             setShowPassword(!showPassword)
-                                          }>
-                                          {showPassword ? (
-                                             <EyeOff className="h-4 w-4" />
-                                          ) : (
-                                             <Eye className="h-4 w-4 " />
-                                          )}
-                                       </Button>
-                                    </div>
-                                 </FormControl>
-                                 <FormDescription>
-                                    Password must include uppercase, lowercase,
-                                    number, and special character.
-                                 </FormDescription>
-                                 <FormMessage />
-                              </FormItem>
-                           )}
-                        />
+                                    </FormControl>
+                                    {isCheckingusername && (
+                                       <Loader2 className="animate-spin" />
+                                    )}
+                                    <p
+                                       className={`text-sm ${
+                                          usernameMessage === "Username is unique."
+                                             ? "text-green-500"
+                                             : "text-red-500"
+                                       }`}>
+                                       {usernameMessage}
+                                    </p>
+                                    <FormMessage />
+                                 </FormItem>
+                              )}
+                           />
+                        </motion.div>
+                        <motion.div variants={fadeInUp}>
+                           <FormField
+                              control={form.control}
+                              name="email"
+                              render={({ field }) => (
+                                 <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                       <Input
+                                          {...field}
+                                          type="email"
+                                          placeholder="example@mail.com"
+                                       />
+                                    </FormControl>
+                                    <FormMessage />
+                                 </FormItem>
+                              )}
+                           />
+                        </motion.div>
+                        <motion.div variants={fadeInUp}>
+                           <FormField
+                              control={form.control}
+                              name="password"
+                              render={({ field }) => (
+                                 <FormItem>
+                                    <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                       <div className="relative">
+                                          <Input
+                                             {...field}
+                                             placeholder="password"
+                                             type={showPassword ? "text" : "password"}
+                                          />
+                                          <Button
+                                             type="button"
+                                             variant="ghost"
+                                             size="sm"
+                                             className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                             onClick={() =>
+                                                setShowPassword(!showPassword)
+                                             }>
+                                             {showPassword ? (
+                                                <EyeOff className="h-4 w-4" />
+                                             ) : (
+                                                <Eye className="h-4 w-4 " />
+                                             )}
+                                          </Button>
+                                       </div>
+                                    </FormControl>
+                                    <FormDescription>
+                                       Password must include uppercase, lowercase,
+                                       number, and special character.
+                                    </FormDescription>
+                                    <FormMessage />
+                                 </FormItem>
+                              )}
+                           />
+                        </motion.div>
 
-                        <Button type="submit" className="w-full">
-                           {isSubmitting ? (
-                              <>
-                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
-                                 processing...
-                              </>
-                           ) : (
-                              "Signup"
-                           )}
-                        </Button>
+                        <motion.div variants={fadeInUp}>
+                           <Button type="submit" className="w-full">
+                              {isSubmitting ? (
+                                 <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                                    processing...
+                                 </>
+                              ) : (
+                                 "Signup"
+                              )}
+                           </Button>
+                        </motion.div>
                      </form>
                   </Form>
-                  <div className="text-center mt-4">
+                  <motion.div variants={fadeInUp} className="text-center mt-4">
                      <Button
                         type="button"
                         onClick={() => signIn("google")}
@@ -235,17 +251,17 @@ const Signup = () => {
                         />
                         Continue with Google
                      </Button>
-                     <p className="mt-2">
+                     <motion.p className="mt-2" variants={fadeInUp}>
                         Already a member?{"  "}
                         <Link
                            href="/login"
                            className="text-blue-600 hover:text-blue-800">
                            Sign in
                         </Link>
-                     </p>
-                  </div>
+                     </motion.p>
+                  </motion.div>
                </div>
-            </div>
+            </motion.div>
          </div>
       </>
    );

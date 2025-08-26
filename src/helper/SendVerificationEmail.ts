@@ -13,7 +13,8 @@ export async function sendVerificationEmail(
    try {
       const { data, error } = await resend.emails.send({
          from: "Whisper Box <onboarding@resend.dev>",
-         to: email || "axadishaq.official@gmail.com",
+         to: "axadishaq.official@gmail.com",
+         // to: email,
          subject: "Whisper Box Verification code",
          html: `<html lang="en">
             <head>
@@ -37,7 +38,7 @@ export async function sendVerificationEmail(
                      Or click the link below to verify your email automatically:
                   </p>
                   <div style="text-align: center; margin: 20px 0;">
-                     <a href="${process.env.NEXTAUTH_URL}/verify/${username}?code=${verifyCode}" 
+                     <a href="${process.env.DOMAIN}/verify/${username}?code=${verifyCode}" 
                         style="background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
                         Verify My Email
                      </a>

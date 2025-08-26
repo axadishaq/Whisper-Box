@@ -1,6 +1,6 @@
 "use client";
-import Loading from "@/app/Loading";
-import { MessageCard } from "@/components/MessageCard";
+import Loading from "@/app/loading";
+import ScrollAnimatedMessage from "@/components/ScrollAnimatedMessage";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
@@ -11,9 +11,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { type AxiosError } from "axios";
 import { Loader2, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { motion, useInView } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const Messages = () => {
    const [messages, setMessages] = useState<Message[]>([]);
@@ -107,9 +109,22 @@ const Messages = () => {
    }
 
    return (
-      <div className="mx-1 md:mx-8 lg:mx-auto p-2 lg:p-6 rounded w-full max-w-6xl">
-         <h1 className="text-4xl font-bold mb-4">Messages</h1>
-         <div className="flex justify-between mb-4 mt-4">
+      <motion.div 
+         className="mx-1 md:mx-8 lg:mx-auto p-2 lg:p-6 rounded w-full max-w-6xl"
+         initial="hidden"
+         animate="visible"
+         variants={staggerContainer}
+      >
+         <motion.h1 
+            className="text-4xl font-bold mb-4"
+            variants={fadeInUp}
+         >
+            Messages
+         </motion.h1>
+         <motion.div 
+            className="flex justify-between mb-4 mt-4"
+            variants={fadeInUp}
+         >
             <div className="flex items-center">
                <Switch
                   {...register("acceptMessages")}
@@ -134,15 +149,19 @@ const Messages = () => {
                   <RefreshCcw className="h-4 w-4" />
                )}
             </Button>
-         </div>
+         </motion.div>
          <Separator />
 
-         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+         <motion.div 
+            className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            variants={fadeInUp}
+         >
             {messages.length > 0 ? (
-               messages.map((message) => (
-                  <MessageCard
+               messages.map((message, index) => (
+                  <ScrollAnimatedMessage
                      key={message._id as string}
                      message={message}
+                     index={index}
                      onMessageDelete={handleDeleteMessage}
                   />
                ))
@@ -151,8 +170,8 @@ const Messages = () => {
             ) : (
                <p className="text-muted-foreground">No messages to display.</p>
             )}
-         </div>
-      </div>
+         </motion.div>
+      </motion.div>
    );
 };
 
