@@ -11,10 +11,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { type AxiosError } from "axios";
 import { Loader2, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const Messages = () => {
@@ -109,22 +109,17 @@ const Messages = () => {
    }
 
    return (
-      <motion.div 
+      <motion.div
          className="mx-1 md:mx-8 lg:mx-auto p-2 lg:p-6 rounded w-full max-w-6xl"
          initial="hidden"
          animate="visible"
-         variants={staggerContainer}
-      >
-         <motion.h1 
-            className="text-4xl font-bold mb-4"
-            variants={fadeInUp}
-         >
+         variants={staggerContainer}>
+         <motion.h1 className="text-4xl font-bold mb-4" variants={fadeInUp}>
             Messages
          </motion.h1>
-         <motion.div 
+         <motion.div
             className="flex justify-between mb-4 mt-4"
-            variants={fadeInUp}
-         >
+            variants={fadeInUp}>
             <div className="flex items-center">
                <Switch
                   {...register("acceptMessages")}
@@ -152,10 +147,9 @@ const Messages = () => {
          </motion.div>
          <Separator />
 
-         <motion.div 
+         <motion.div
             className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            variants={fadeInUp}
-         >
+            variants={fadeInUp}>
             {messages.length > 0 ? (
                messages.map((message, index) => (
                   <ScrollAnimatedMessage
