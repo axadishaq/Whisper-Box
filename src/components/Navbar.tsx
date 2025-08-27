@@ -8,7 +8,15 @@ import {
    DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, Moon, Settings, Sun } from "lucide-react";
+import {
+   LayoutDashboard,
+   LogOut,
+   Mails,
+   Moon,
+   Send,
+   Settings,
+   Sun,
+} from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import {
@@ -81,13 +89,41 @@ const Navbar = () => {
                            <AvatarImage src={user.image || "/avatar.png"} />
                            <AvatarFallback>AI</AvatarFallback>
                         </Avatar>
-                        <p className="p-1 px-2 text-md font-semibold">
+                        <p className="w-16 p-1 px-2 text-md font-semibold overflow-x-clip">
                            {user?.username || "----"}
                         </p>
                      </DropdownMenuTrigger>
                      <DropdownMenuContent sideOffset={10}>
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
+                        {[
+                           {
+                              title: "dashboard",
+                              url: "/dashboard",
+                              icon: LayoutDashboard,
+                           },
+                           {
+                              title: "Inbox",
+                              url: "/messages",
+                              icon: Mails,
+                           },
+                           {
+                              title: "Send Message",
+                              url: "/u",
+                              icon: Send,
+                           },
+                        ].map((item) => (
+                           <DropdownMenuItem
+                              key={item.title}
+                              asChild
+                              className=" md:hidden">
+                              <Link href={item.url} className="">
+                                 <item.icon className="h-[1.2rem] w-[1.2rem] mr-2" />
+                                 {item.title}
+                              </Link>
+                           </DropdownMenuItem>
+                        ))}
+
                         <DropdownMenuItem asChild>
                            <Link href="/setting">
                               <Settings className="h-[1.2rem] w-[1.2rem] mr-2" />
