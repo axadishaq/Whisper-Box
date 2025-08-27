@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 import { Toaster } from "@/components/ui/sonner";
 import ChatWidget from "@/components/ChatWidget";
 import AuthProvider from "@/context/AuthProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
    variable: "--font-geist-sans",
@@ -52,6 +53,7 @@ export default async function RootLayout({
                      </main>
                   </SidebarProvider>
                </ThemeProvider>
+               <Analytics mode="production" />
             </body>
          </AuthProvider>
       </html>
