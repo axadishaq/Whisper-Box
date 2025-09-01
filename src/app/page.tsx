@@ -218,8 +218,11 @@ const Home = () => {
             </section>
 
             {/* Section 2: How It Works */}
-            <section ref={howItWorksRef} className="py-12 px-2 md:px-8 w-full">
+            <section
+               ref={howItWorksRef}
+               className="py-12 px-4 md:px-8 w-full h-auto overflow-x-hidden overflow-y-hidden">
                <motion.div
+                  className="max-w-6xl mx-auto"
                   initial="hidden"
                   animate={howItWorksInView ? "visible" : "hidden"}
                   variants={staggerContainer}>
@@ -232,16 +235,16 @@ const Home = () => {
                            Discover the magic of anonymous conversations
                         </CardDescription>
                      </CardHeader>
-                     <CardContent className="flex flex-wrap gap-4 justify-evenly space-y-6">
+                     <CardContent className="flex flex-wrap gap-6 justify-center">
                         <motion.div
-                           className="flex items-start space-x-4"
+                           className="flex flex-col md:flex-row items-center md:items-start space-y-2 md:space-y-0 md:space-x-4"
                            variants={fadeInUp}>
                            <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center flex-shrink-0">
                               <span className="text-green-500 font-bold">
                                  1
                               </span>
                            </div>
-                           <div>
+                           <div className="text-center md:text-left max-w-sm">
                               <h3 className="font-semibold">
                                  Create Your Profile
                               </h3>
@@ -253,12 +256,12 @@ const Home = () => {
                         </motion.div>
 
                         <motion.div
-                           className="flex items-start space-x-4"
+                           className="flex flex-col md:flex-row items-center md:items-start space-y-2 md:space-y-0 md:space-x-4"
                            variants={fadeInUp}>
                            <div className="w-10 h-10 bg-blue-500/10 rounded-full flex items-center justify-center flex-shrink-0">
                               <span className="text-blue-500 font-bold">2</span>
                            </div>
-                           <div>
+                           <div className="text-center md:text-left max-w-sm">
                               <h3 className="font-semibold">Share Your Link</h3>
                               <p className="text-sm text-muted-foreground">
                                  Send your profile link to others so they can
@@ -268,14 +271,14 @@ const Home = () => {
                         </motion.div>
 
                         <motion.div
-                           className="flex items-start space-x-4"
+                           className="flex flex-col md:flex-row items-center md:items-start space-y-2 md:space-y-0 md:space-x-4"
                            variants={fadeInUp}>
                            <div className="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center flex-shrink-0">
                               <span className="text-purple-500 font-bold">
                                  3
                               </span>
                            </div>
-                           <div>
+                           <div className="text-center md:text-left max-w-sm">
                               <h3 className="font-semibold">
                                  Receive Messages
                               </h3>
@@ -287,14 +290,14 @@ const Home = () => {
                         </motion.div>
 
                         <motion.div
-                           className="flex items-start space-x-4"
+                           className="flex flex-col md:flex-row items-center md:items-start space-y-2 md:space-y-0 md:space-x-4"
                            variants={fadeInUp}>
                            <div className="w-10 h-10 bg-orange-500/10 rounded-full flex items-center justify-center flex-shrink-0">
                               <span className="text-orange-500 font-bold">
                                  4
                               </span>
                            </div>
-                           <div>
+                           <div className="text-center md:text-left max-w-sm">
                               <h3 className="font-semibold">Stay Anonymous</h3>
                               <p className="text-sm text-muted-foreground">
                                  All messages are completely anonymous - send

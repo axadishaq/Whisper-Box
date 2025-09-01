@@ -37,7 +37,7 @@ export default async function RootLayout({
       <html lang="en" suppressHydrationWarning>
          <AuthProvider>
             <body
-               className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}>
+               className={`${geistSans.variable} ${geistMono.variable} antialiased flex overflow-x-hidden`}>
                <ThemeProvider
                   attribute="class"
                   defaultTheme="system"
@@ -45,7 +45,7 @@ export default async function RootLayout({
                   disableTransitionOnChange>
                   <SidebarProvider defaultOpen={defaultOpen}>
                      <AppSidebar />
-                     <main className="w-full ">
+                     <main className="w-full overflow-x-hidden">
                         <Navbar />
                         <div className="px-4">{children}</div>
                         <Toaster position="top-center" />
