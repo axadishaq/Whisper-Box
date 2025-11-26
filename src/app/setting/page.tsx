@@ -46,7 +46,7 @@ const Setting = () => {
             },
             {
                title: "Verified",
-               value: "Verification Completed",
+               value: "Completed",
                icon: Verified,
                color: "text-green-500",
                bgColor: "bg-green-50 dark:bg-green-900/20",
@@ -129,7 +129,7 @@ const Setting = () => {
                            </CardTitle>
                         </CardHeader>
                         <CardContent>
-                           <div className="text-md font-semibold border p-2 px-4 rounded-xl">
+                           <div className="text-md font-semibold border p-2 px-4 rounded-xl truncate">
                               {stat.value}
                            </div>
                         </CardContent>
